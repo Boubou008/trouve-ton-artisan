@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Bâtiment", "slug": "batiment" },
+  { "id": 2, "name": "Services", "slug": "services" },
+  { "id": 3, "name": "Fabrication", "slug": "fabrication" },
+  { "id": 4, "name": "Alimentation", "slug": "alimentation" }
+]
