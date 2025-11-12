@@ -6,9 +6,10 @@ function ArtisanCard({ artisan }) {
       <div className="card-body">
         <h5 className="card-title">{artisan.name}</h5>
         <p className="card-text">
-          {artisan.city} ({artisan.zip})<br />
-          Note : {artisan.rating} ★<br />
-          Spécialité : {artisan.speciality_name}
+          {artisan.city} — {artisan.rating} ★
+        </p>
+        <p className="card-text">
+          <small className="text-muted">{artisan.speciality_name}</small>
         </p>
         <Link to={`/artisan/${artisan.slug}`} className="btn btn-primary">
           Voir le profil

@@ -1,0 +1,17 @@
+[
+  { "id": 1, "name": "Plombier", "slug": "plombier", "category_id": 1 },
+  { "id": 2, "name": "Électricien", "slug": "electricien", "category_id": 1 },
+  { "id": 3, "name": "Menuisier", "slug": "menuisier", "category_id": 1 },
+  { "id": 4, "name": "Chauffagiste", "slug": "chauffagiste", "category_id": 1 },
+  { "id": 5, "name": "Coiffeur", "slug": "coiffeur", "category_id": 2 },
+  { "id": 6, "name": "Fleuriste", "slug": "fleuriste", "category_id": 2 },
+  { "id": 7, "name": "Toiletteur", "slug": "toiletteur", "category_id": 2 },
+  { "id": 8, "name": "Webdesigner", "slug": "webdesign", "category_id": 2 },
+  { "id": 9, "name": "Bijoutier", "slug": "bijoutier", "category_id": 3 },
+  { "id": 10, "name": "Couturier", "slug": "couturier", "category_id": 3 },
+  { "id": 11, "name": "Ferronier", "slug": "ferronier", "category_id": 3 },
+  { "id": 12, "name": "Boucher", "slug": "boucher", "category_id": 4 },
+  { "id": 13, "name": "Boulanger", "slug": "boulanger", "category_id": 4 },
+  { "id": 14, "name": "Chocolatier", "slug": "chocolatier", "category_id": 4 },
+  { "id": 15, "name": "Traiteur", "slug": "traiteur", "category_id": 4 }
+]

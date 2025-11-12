@@ -1,13 +1,210 @@
+/* =========================================================
+   🧩 1. Import de la police Graphik
+   ========================================================= */
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('../fonts/Graphik-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('../fonts/Graphik-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('../fonts/Graphik-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* =========================================================
+   🎨 2. Variables de couleur et paramètres globaux
+   ========================================================= */
+
+$primary-color: #0074c7;
+$secondary-color: #005b9a;
+$light-bg: #f8f9fa;
+$text-color: #212529;
+$border-radius: 12px;
+
+/* =========================================================
+   🌍 3. Styles généraux
+   ========================================================= */
+
 body {
-  font-family: 'Graphik', sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
+  font-family: 'Graphik', Arial, sans-serif;
+  font-weight: 400;
+  background-color: $light-bg;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Graphik', Arial, sans-serif;
+  font-weight: 700;
+  color: $primary-color;
+}
+
+p {
+  margin-bottom: 1rem;
 }
 
 a {
+  color: $primary-color;
   text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
 }
 
-h1, h2 {
-  color: #0074c7;
+/* =========================================================
+   🧭 4. Header
+   ========================================================= */
+
+header {
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .navbar {
+    padding: 1rem 0;
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: $primary-color;
+    }
+
+    .nav-link {
+      color: $text-color;
+      margin-left: 1rem;
+      font-weight: 500;
+
+      &.active,
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+/* =========================================================
+   🧩 5. Cartes artisans
+   ========================================================= */
+
+.card {
+  border-radius: $border-radius;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .card-title {
+    color: $primary-color;
+    font-weight: 600;
+  }
+
+  .btn-primary {
+    background-color: $primary-color;
+    border: none;
+    border-radius: $border-radius / 2;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}
+
+/* =========================================================
+   📬 6. Formulaires
+   ========================================================= */
+
+form {
+  label {
+    font-weight: 500;
+    color: $text-color;
+  }
+
+  input, textarea {
+    border-radius: $border-radius / 2;
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  button[type="submit"] {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius / 2;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}
+
+/* =========================================================
+   🦶 7. Footer
+   ========================================================= */
+
+footer {
+  background-color: #222;
+  color: #eee;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    color: lighten($primary-color, 20%);
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+/* =========================================================
+   📱 8. Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+  header .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .nav-link {
+      margin: 0.5rem 0;
+    }
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    margin-bottom: 1.5rem;
+  }
 }

@@ -14,6 +14,6 @@ export const router = createBrowserRouter([
       { path: "/categorie/:slug", element: <Category /> },
       { path: "/artisan/:slug", element: <Artisan /> },
       { path: "*", element: <NotFound /> }
-    ],
-  },
+    ]
+  }
 ]);
