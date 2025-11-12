@@ -12,7 +12,7 @@ function Home() {
       <h1 className="text-center mb-4">Trouve ton artisan</h1>
 
       <div className="mb-5">
-        <h2>Comment ça marche ?</h2>
+        <h2>Comment trouver mon artisan ?</h2>
         <ol>
           <li>Choisis une catégorie dans le menu.</li>
           <li>Parcours la liste et filtre par nom.</li>
