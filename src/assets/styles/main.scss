@@ -81,12 +81,7 @@ header {
   .navbar {
     padding: 1rem 0;
 
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: $primary-color;
-    }
-
+}
     .nav-link {
       color: $text-color;
       margin-left: 1rem;
@@ -98,7 +93,6 @@ header {
       }
     }
   }
-}
 
 /* =========================================================
    🧩 5. Cartes artisans
@@ -207,4 +201,45 @@ footer {
   .card {
     margin-bottom: 1.5rem;
   }
+}
+
+/* Barre fine */
+.navbar-compact {
+  --bs-navbar-padding-y: .1rem;
+  padding: .1rem .75rem;
+  min-height: 100px;  
+  line-height: 1;
+  overflow: visible;  
+}
+
+.navbar-brand { padding: 0; margin-right: .75rem; }
+
+/* Conteneur du logo : reste petit, sert juste d'ancre */
+.brand-wrap {
+  position: relative;
+  display: inline-block;
+  height: 48px;       
+  width: 120px;       
+  overflow: visible;  
+}
+
+/* Logo énorme, mais hors flux → n’augmente pas la navbar */
+.brand-logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);  
+  height: 300px;                 
+  width: auto;
+  object-fit: contain;
+  z-index: 2;
+}
+
+/* Menu à droite */
+.navbar-nav { margin-left: auto; }
+
+/* Mobile : on réduit le logo pour éviter qu'il ne cache tout */
+@media (max-width: 576px) {
+  .brand-wrap { height: 44px; width: 100px; }
+  .brand-logo { height: 180px; }  
 }

@@ -1,31 +1,32 @@
 import { useParams } from "react-router-dom";
-import artisans from "../data/artisans.json";
-import specialities from "../data/specialities.json";
+import { useState, useMemo } from "react";
 import categories from "../data/categories.json";
+import specialities from "../data/specialities.json";
+import artisans from "../data/artisans.json";
 import ArtisanCard from "../components/ArtisanCard";
-import { useState } from "react";
 
 function Category() {
   const { slug } = useParams();
-  const [search, setSearch] = useState("");
+  const [q, setQ] = useState("");
 
-  const category = categories.find((c) => c.slug === slug);
+  const category = categories.find(c => c.slug === slug);
+  if (!category) return <p>Catégorie introuvable.</p>;
 
-  if (!category) {
-    return <p>Catégorie introuvable.</p>;
-  }
-
-  // Trouver les spécialités associées à cette catégorie
-  const specialityIds = specialities
-    .filter((s) => s.category_id === category.id)
-    .map((s) => s.id);
-
-  // Filtrer les artisans de la catégorie + recherche
-  const filteredArtisans = artisans.filter(
-    (a) =>
-      specialityIds.includes(a.speciality_id) &&
-      a.name.toLowerCase().includes(search.toLowerCase())
+  const specialityIds = useMemo(
+    () => specialities.filter(s => s.category_id === category.id).map(s => s.id),
+    [category.id]
   );
+
+  const list = useMemo(() => {
+    return artisans
+      .filter(a => {
+        // on relie par le nom de spécialité si tu n’as pas de speciality_id dans artisans.json
+        const spec = specialities.find(s => s.name === a.speciality_name);
+        const inCategory = spec ? spec.category_id === category.id : false;
+        const matchName = a.name.toLowerCase().includes(q.toLowerCase());
+        return inCategory && matchName;
+      });
+  }, [q, category.id]);
 
   return (
     <section>
@@ -35,15 +36,16 @@ function Category() {
         type="text"
         className="form-control mb-4"
         placeholder="Rechercher un artisan..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        aria-label="Rechercher un artisan par nom"
       />
 
       <div className="row">
-        {filteredArtisans.length > 0 ? (
-          filteredArtisans.map((artisan) => (
-            <div className="col-md-4" key={artisan.id}>
-              <ArtisanCard artisan={artisan} />
+        {list.length ? (
+          list.map(a => (
+            <div className="col-md-4" key={a.id}>
+              <ArtisanCard artisan={a} />
             </div>
           ))
         ) : (

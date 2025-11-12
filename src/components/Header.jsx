@@ -1,13 +1,18 @@
 import { NavLink } from "react-router-dom";
 import categories from "../data/categories.json";
+import logo from "../assets/images/logo.png";
 
 function Header() {
   return (
     <header>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div className="container">
-          <NavLink to="/" className="navbar-brand fw-bold text-primary">
-            Trouve ton artisan
+      <nav className="navbar navbar-expand-lg bg-white shadow-sm navbar-compact">
+        <div className="container-fluid px-0">
+
+          {/* === Brand : conteneur fin, logo en absolute === */}
+          <NavLink to="/" className="navbar-brand me-auto ms-0">
+            <span className="brand-wrap">
+              <img src={logo} alt="Logo" className="brand-logo" />
+            </span>
           </NavLink>
 
           <button
@@ -23,7 +28,7 @@ function Header() {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
+            <ul className="navbar-nav ms-auto pe-3">
               {categories.map((cat) => (
                 <li className="nav-item" key={cat.id}>
                   <NavLink
