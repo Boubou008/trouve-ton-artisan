@@ -1,34 +1,87 @@
+import { useState, useMemo } from "react";
 import artisans from "../data/artisans.json";
-import ArtisanCard from "../components/ArtisanCard";
+import { Link } from "react-router-dom";
+import Stars from "../components/Stars";
+
 
 function Home() {
-  const featured = artisans
-    .filter(a => a.is_featured)
-    .sort((a, b) => (a.featured_rank ?? 99) - (b.featured_rank ?? 99))
-    .slice(0, 3);
+  const [query, setQuery] = useState("");
+
+  // 🔎 Recherche globale (nom + spécialité + ville)
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return artisans.filter((a) =>
+      (a.name + " " + a.speciality_name + " " + a.city).toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  // ⭐ Top 3 via is_featured + featured_rank
+  const topArtisans = useMemo(() => {
+    return artisans
+      .filter((a) => a.is_featured)
+      .sort((a, b) => (a.featured_rank ?? 99) - (b.featured_rank ?? 99))
+      .slice(0, 3);
+  }, []);
 
   return (
-    <section>
+    <section className="container py-5">
       <h1 className="text-center mb-4">Trouve ton artisan</h1>
 
-      <div className="mb-5">
-        <h2>Comment trouver mon artisan ?</h2>
-        <ol>
-          <li>Choisis une catégorie dans le menu.</li>
-          <li>Parcours la liste et filtre par nom.</li>
-          <li>Ouvre une fiche artisan.</li>
-          <li>Envoie le formulaire de contact.</li>
-        </ol>
+      {/* Barre de recherche */}
+      <div className="mb-4 text-center">
+        <input
+          type="text"
+          className="form-control form-control-lg w-75 mx-auto"
+          placeholder="Rechercher un artisan (nom, spécialité ou ville)..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </div>
 
-      <h2 className="mb-3">Les artisans du mois</h2>
-      <div className="row">
-        {featured.map(a => (
-          <div className="col-md-4" key={a.id}>
-            <ArtisanCard artisan={a} />
+      {/* Résultats si recherche en cours */}
+      {query.trim() ? (
+        results.length ? (
+          <div className="row g-3">
+            {results.map((a) => (
+              <div key={a.id} className="col-md-4">
+                <div className="card h-100 p-3">
+                  <h5 className="card-title">{a.name}</h5>
+                  <p className="card-text mb-1"><strong>Spécialité :</strong> {a.speciality_name}</p>
+                  <p className="card-text mb-1"><strong>Ville :</strong> {a.city}</p>
+                  <p className="card-text"><Stars rating={a.rating} /></p>
+
+                  <Link to={`/artisan/${a.slug}`} className="btn btn-primary mt-auto">
+                    Voir le profil
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        ) : (
+          <p className="text-center mt-3">Aucun artisan trouvé.</p>
+        )
+      ) : (
+        <>
+          {/* Top 3 quand pas de recherche */}
+          <h2 className="text-center mb-3">Nos artisans du moment</h2>
+          <div className="row g-3">
+            {topArtisans.map((a) => (
+              <div key={a.id} className="col-md-4">
+                <div className="card h-100 p-3">
+                  <h5 className="card-title">{a.name}</h5>
+                  <p className="card-text mb-1"><strong>Spécialité :</strong> {a.speciality_name}</p>
+                  <p className="card-text mb-1"><strong>Ville :</strong> {a.city}</p>
+                  <p className="card-text"><Stars rating={a.rating} /></p>
+                  <Link to={`/artisan/${a.slug}`} className="btn btn-primary mt-auto">
+                    Voir le profil
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }
