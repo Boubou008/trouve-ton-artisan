@@ -1,56 +1,105 @@
+// src/pages/Category.jsx
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useState, useMemo } from "react";
-import categories from "../data/categories.json";
-import specialities from "../data/specialities.json";
-import artisans from "../data/artisans.json";
 import ArtisanCard from "../components/ArtisanCard";
+import { getCategories, getArtisans } from "../services/api";
 
 function Category() {
   const { slug } = useParams();
-  const [q, setQ] = useState("");
+  const [category, setCategory] = useState(null);
+  const [artisans, setArtisans] = useState([]);
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const category = categories.find(c => c.slug === slug);
-  if (!category) return <p>Catégorie introuvable.</p>;
+  // Charger la catégorie (nom) depuis l’API
+  useEffect(() => {
+    let alive = true;
 
-  const specialityIds = useMemo(
-    () => specialities.filter(s => s.category_id === category.id).map(s => s.id),
-    [category.id]
-  );
+    (async () => {
+      try {
+        const cats = await getCategories(); // GET /api/categories
+        const found = cats.find((c) => c.slug === slug);
+        if (!found) {
+          if (alive) {
+            setError("Catégorie introuvable.");
+            setCategory(null);
+          }
+        } else if (alive) {
+          setCategory(found);
+          setError("");
+        }
+      } catch (e) {
+        console.error("Erreur chargement catégories :", e);
+        if (alive) setError("Erreur lors du chargement des catégories.");
+      }
+    })();
 
-  const list = useMemo(() => {
-    return artisans
-      .filter(a => {
-        // on relie par le nom de spécialité si tu n’as pas de speciality_id dans artisans.json
-        const spec = specialities.find(s => s.name === a.speciality_name);
-        const inCategory = spec ? spec.category_id === category.id : false;
-        const matchName = a.name.toLowerCase().includes(q.toLowerCase());
-        return inCategory && matchName;
-      });
-  }, [q, category.id]);
+    return () => {
+      alive = false;
+    };
+  }, [slug]);
+
+  // Charger les artisans de cette catégorie + filtre de recherche
+  useEffect(() => {
+    let alive = true;
+
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await getArtisans({
+          categorySlug: slug,
+          q: query,
+        }); // GET /api/artisans?category=slug&q=...
+        if (alive) {
+          setArtisans(data);
+        }
+      } catch (e) {
+        console.error("Erreur chargement artisans catégorie :", e);
+        if (alive) setError("Erreur lors du chargement des artisans.");
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [slug, query]);
+
+  if (error && !category && !loading) {
+    return <p>{error}</p>;
+  }
 
   return (
-    <section>
-      <h1 className="mb-4">Catégorie : {category.name}</h1>
+    <section className="container py-4">
+      <h1 className="mb-4">
+        Catégorie : {category ? category.name : "Chargement…"}
+      </h1>
 
-      <input
-        type="text"
-        className="form-control mb-4"
-        placeholder="Rechercher un artisan..."
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        aria-label="Rechercher un artisan par nom"
-      />
+      {/* Barre de recherche dans la catégorie */}
+      <div className="mb-4">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Rechercher un artisan dans cette catégorie…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
+
+      {loading && <p>Chargement…</p>}
 
       <div className="row">
-        {list.length ? (
-          list.map(a => (
-            <div className="col-md-4" key={a.id}>
-              <ArtisanCard artisan={a} />
-            </div>
-          ))
-        ) : (
+        {!loading && artisans.length === 0 && !error && (
           <p>Aucun artisan trouvé dans cette catégorie.</p>
         )}
+
+        {artisans.map((artisan) => (
+          <div className="col-md-4 mb-3" key={artisan.id}>
+            <ArtisanCard artisan={artisan} />
+          </div>
+        ))}
       </div>
     </section>
   );
