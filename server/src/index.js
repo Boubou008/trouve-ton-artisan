@@ -11,13 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// routes
 app.use("/api/categories", categoriesRouter);
 app.use("/api/artisans", artisansRouter);
 app.use("/api/contact", contactRouter);
 
-// healthcheck
-app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

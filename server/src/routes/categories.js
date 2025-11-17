@@ -1,16 +1,10 @@
 import { Router } from "express";
-import { pool } from "../db.js";
+import { categories } from "../db.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT id, name, slug FROM categories ORDER BY name ASC");
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "DB_ERROR" });
-  }
+router.get("/", (req, res) => {
+  res.json(categories);
 });
 
 export default router;

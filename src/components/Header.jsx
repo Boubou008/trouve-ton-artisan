@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.png";
 function Header() {
   return (
     <header>
-      <nav className="navbar navbar-expand-lg bg-white shadow-sm navbar-compact">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm navbar-compact">
         <div className="container-fluid px-0">
 
           {/* === Brand : conteneur fin, logo en absolute === */}

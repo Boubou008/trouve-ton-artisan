@@ -107,7 +107,12 @@ function Home() {
               <div key={a.id} className="col-md-4">
                 <div className="card h-100 p-3 d-flex flex-column">
                   <h5 className="card-title">{a.name}</h5>
-                  <p className="card-text mb-1">
+                  {a.speciality_name && (
+                    <p className="card-text mb-1">
+                      <strong>Spécialité :</strong> {a.speciality_name}
+                      </p>
+                    )}
+                    <p className="card-text mb-1">
                     <strong>Ville :</strong> {a.city}
                   </p>
                   <p className="card-text">

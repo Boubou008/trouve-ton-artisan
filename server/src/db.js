@@ -1,14 +1,12 @@
-import mysql from "mysql2/promise";
-import dotenv from "dotenv";
-dotenv.config();
+// server/src/db.js
+// 👉 Version sans MySQL : on lit les fichiers JSON du front
 
-export const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 10),
-  queueLimit: 0,
-  charset: "utf8mb4_general_ci",
-});
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+// Chemins depuis server/src vers le dossier src/data du front
+const artisans = require("../../src/data/artisans.json");
+const categories = require("../../src/data/categories.json");
+const specialities = require("../../src/data/specialities.json");
+
+export { artisans, categories, specialities };
