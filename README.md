@@ -141,16 +141,19 @@ L'API lit les données via :
 
 Le serveur MySQL plante au démarrage avec cette erreur :
 
-    Error: MySQL shutdown unexpectedly.
-    This may be due to a blocked port, missing dependencies,
-    improper privileges, a crash, or a shutdown by another method.
+    Erreur my sql : Error: MySQL shutdown unexpectedly.
+08:52:17  [mysql] 	This may be due to a blocked port, missing dependencies, 
+08:52:17  [mysql] 	improper privileges, a crash, or a shutdown by another method.
+08:52:17  [mysql] 	Press the Logs button to view error logs and check
+08:52:17  [mysql] 	the Windows Event Viewer for more clues
+08:52:17  [mysql] 	If you need more help, copy and post this
+08:52:17  [mysql] 	entire log window on the forums
 
 ➡️ Impossible d'ouvrir phpMyAdmin\
 ➡️ Impossible de démarrer MySQL via XAMPP\
 ➡️ Donc la base MySQL n'a pas pu être mise en place
 
-Les données sont donc servies via **des fichiers JSON**, ce qui est
-parfaitement utilisable pour un projet pédagogique.
+Les données sont donc servies via **des fichiers JSON**
 
 ------------------------------------------------------------------------
 
@@ -170,15 +173,6 @@ parfaitement utilisable pour un projet pédagogique.
       is_featured, featured_rank
     )
     contact_messages (id, artisan_id, name, email, subject, message)
-
-------------------------------------------------------------------------
-
-## 🧪 7. Build de production (front)
-
-    npm run build
-
-Génère :\
-📁 `/dist`
 
 ------------------------------------------------------------------------
 
@@ -205,7 +199,7 @@ Génère :\
 
 ## 📚 9. Auteur
 
-Projet réalisé dans le cadre du **CEF**\
+Projet réalisé par Feck François-Xavier dans le cadre du **CEF**\
 TP : *Trouve ton artisan*
 
 ------------------------------------------------------------------------
