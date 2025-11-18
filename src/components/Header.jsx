@@ -27,22 +27,23 @@ function Header() {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto pe-3">
-              {categories.map((cat) => (
-                <li className="nav-item" key={cat.id}>
-                  <NavLink
-                    to={`/categorie/${cat.slug}`}
-                    className={({ isActive }) =>
-                      isActive ? "nav-link active text-primary" : "nav-link"
-                    }
-                  >
-                    {cat.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+  <ul className="navbar-nav pe-3 text-end">
+    {categories.map((cat) => (
+      <li className="nav-item" key={cat.id}>
+        <NavLink
+          to={`/categorie/${cat.slug}`}
+          className={({ isActive }) =>
+            isActive ? "nav-link active text-primary" : "nav-link"
+          }
+        >
+          {cat.name}
+        </NavLink>
+      </li>
+    ))}
+  </ul>
+</div>
+
         </div>
       </nav>
     </header>
